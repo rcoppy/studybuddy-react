@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from './AppBar';
 import Container from '@mui/material/Container';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Link
@@ -30,21 +30,22 @@ function App() {
       <div className="App">
         <Router>
           <AppBar />
+          <Link to="/profile/345">Profile 345</Link>
           <Container maxWidth="xl">
             <Routes>
-              <Route path="./" element={<Home />} />
-              <Route path="./profile/me" element={<MyProfile />} />
-              <Route path="./profile/:id" element={<StudentProfile />} />
-              <Route path="./gallery/students" element={<StudentsGallery />} />
-              <Route path="./gallery/groups" element={<GroupsGallery />} />
-              <Route path="./group/me" element={<MyGroups />} />
-              <Route path="./group/new" element={<CreateGroup />} />
-              <Route path="./group/:id" element={<GroupProfile />} />
-              <Route path="./invites" element={<Invites />} />
-              <Route path="./messages" element={<Messages />} />
-              <Route path="./messages/:id" element={<MessageThread />} />
-              <Route path="./availability" element={<MyAvailability />} />
-              <Route path="./welcome" element={<Onboarding />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/profile/me" element={<MyProfile />} />
+              <Route path="/profile/:id" element={<StudentProfile />} />
+              <Route path="/gallery/students" element={<StudentsGallery />} />
+              <Route path="/gallery/groups" element={<GroupsGallery />} />
+              <Route path="/group/me" element={<MyGroups />} />
+              <Route path="/group/new" element={<CreateGroup />} />
+              <Route path="/group/:id" element={<GroupProfile />} />
+              <Route path="/invites" element={<Invites />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/messages/:id" element={<MessageThread />} />
+              <Route path="/availability" element={<MyAvailability />} />
+              <Route path="/welcome" element={<Onboarding />} />
             </Routes>
           </Container>
         </Router>
