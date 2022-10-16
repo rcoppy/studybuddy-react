@@ -33,7 +33,7 @@ function App() {
         <Router>
           <AppBar />
           <Alert severity="info">This is an info alert — check it out!</Alert>
-          <Container maxWidth="xl">
+          <Container maxWidth="xl" sx={{ mt: 1 }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/profile/me" element={<MyProfile />} />

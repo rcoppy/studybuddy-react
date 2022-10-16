@@ -133,7 +133,7 @@ function AppBar() {
                         </Typography>
                     </Stack>
 
-                    <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                    <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
                         <Link to="/">
                             <IconButton aria-label="see homepage" component="label">
                                 <HomeIcon color="primary[50]" />
