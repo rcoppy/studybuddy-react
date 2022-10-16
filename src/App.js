@@ -22,6 +22,8 @@ import Messages from './views/Messages';
 import MessageThread from './views/MessageThread';
 import MyAvailability from './views/MyAvailability';
 import Onboarding from './views/Onboarding';
+import Alert from '@mui/material/Alert';
+import BlockList from './views/BlockList';
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
       <div className="App">
         <Router>
           <AppBar />
-          <Link to="/profile/345">Profile 345</Link>
+          <Alert severity="info">This is an info alert — check it out!</Alert>
           <Container maxWidth="xl">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -46,6 +48,7 @@ function App() {
               <Route path="/messages/:id" element={<MessageThread />} />
               <Route path="/availability" element={<MyAvailability />} />
               <Route path="/welcome" element={<Onboarding />} />
+              <Route path="/blocklist" element={<BlockList />} />
             </Routes>
           </Container>
         </Router>

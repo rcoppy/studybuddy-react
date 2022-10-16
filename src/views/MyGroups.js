@@ -1,6 +1,11 @@
+import CreateGroupFab from '../widgets/CreateGroupFab';
+
 function MyGroups() {
-    return (<>
-        <h1>My groups!</h1></>
+    return (
+        <>
+            <h1>My groups!</h1>
+            <CreateGroupFab />
+        </>
     );
 }
 
