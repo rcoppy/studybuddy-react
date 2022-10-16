@@ -22,7 +22,6 @@ import Messages from './views/Messages';
 import MessageThread from './views/MessageThread';
 import MyAvailability from './views/MyAvailability';
 import Onboarding from './views/Onboarding';
-import Alert from '@mui/material/Alert';
 import BlockList from './views/BlockList';
 
 function App() {
@@ -32,7 +31,6 @@ function App() {
       <div className="App">
         <Router>
           <AppBar />
-          <Alert severity="info">This is an info alert — check it out!</Alert>
           <Container maxWidth="xl" sx={{ mt: 1 }}>
             <Routes>
               <Route path="/" element={<Home />} />
