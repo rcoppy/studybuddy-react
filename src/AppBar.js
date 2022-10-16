@@ -15,6 +15,7 @@ import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import Stack from '@mui/material/Stack';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Link } from 'react-router-dom';
 
 function AppBar() {
     return (
@@ -22,19 +23,30 @@ function AppBar() {
             <Container maxWidth="xl">
                 <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
-                        <Avatar sx={{ mr: 2 }} />
+                        <Link to="/profile/me">
+                            <Avatar sx={{ mr: 2 }} />
+                        </Link>
                         <Typography variant="h6">
                             StudyBuddies
                         </Typography>
                     </Stack>
 
-                    <Stack direction="row" spacing={2}>
-                        <Badge badgeContent={14} color="secondary">
-                            <MailIcon color="primary[50]" />
-                        </Badge>
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon color="primary[50]" />
-                        </Badge>
+                    <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                        <Link to="/messages">
+                            <IconButton aria-label="see messages" component="label">
+                                <Badge badgeContent={14} color="warning">
+                                    <MailIcon color="primary[50]" />
+                                </Badge>
+                            </IconButton>
+                        </Link>
+                        
+                        <Link to="/invites">
+                            <IconButton aria-label="see invites" component="label">
+                                <Badge badgeContent={14} color="warning">
+                                    <NotificationsIcon color="primary[50]" />
+                                </Badge>
+                            </IconButton>
+                        </Link>
                     </Stack>
                 </Toolbar>
             </Container>
