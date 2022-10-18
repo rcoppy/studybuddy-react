@@ -24,3 +24,8 @@ export default class StudentProfileModel {
         ]
     }
 }
+
+export function truncateClassYear(year) {
+    const str = year.toString();
+    return "'" + str.substring(str.length - 2, str.length);
+}

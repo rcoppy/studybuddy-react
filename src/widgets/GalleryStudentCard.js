@@ -9,6 +9,7 @@ import { Stack, IconButton, Avatar, Chip, CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import blue from '@mui/material/colors/blue';
+import StudentViewModal from '../modals/StudentViewModal';
 
 
 const theme = createTheme({
@@ -25,9 +26,9 @@ const CustomChip = styled(Chip)(({ theme }) => ({
   backgroundColor: theme.palette.background.chip,
 }));
 
-function card(student) {
+function card(student, handleOpen) {
   return (
-    <CardActionArea component={Link} to="/profile/43" >
+    <CardActionArea onClick={handleOpen} >
       <CardContent mt={2} sx={{ height: '66vw', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Stack direction="column" sx={{ minWidth: '30%', mt: 3 }}>
@@ -68,9 +69,15 @@ function card(student) {
 };
 
 export default function GalleryStudentCard(props) {
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ bgcolor: 'palette.primary', textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '66vw', height: '66vw', borderRadius: "100%" }}>{card(props.student)}</Card>
+      <Card sx={{ bgcolor: 'palette.primary', textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '66vw', height: '66vw', borderRadius: "100%" }}>{card(props.student, handleOpen)}</Card>
+      <StudentViewModal handleClose={handleClose} open={open} student={props.student}/>
     </ThemeProvider>
   );
 }

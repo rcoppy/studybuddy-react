@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import orange from '@mui/material/colors/orange';
 import GroupIcon from '@mui/icons-material/Group';
+import GroupViewModal from '../modals/GroupViewModal';
 
 
 const theme = createTheme({
@@ -26,9 +27,9 @@ const CustomChip = styled(Chip)(({ theme }) => ({
     backgroundColor: theme.palette.background.chip,
 }));
 
-function card(group) {
+function card(group, handleOpen) {
     return (
-        <CardActionArea component={Link} to="/group/43" >
+        <CardActionArea onClick={handleOpen} >
             <CardContent mt={2} sx={{ height: '66vw', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Stack direction="column" sx={{ minWidth: '30%', mt: 3 }}>
@@ -36,7 +37,7 @@ function card(group) {
                             {group.title}
                         </Typography>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                            {group.students.length} members
+                        {group.subject}, {group.students.length} members
                         </Typography>
                     </Stack>
 
@@ -67,9 +68,15 @@ function card(group) {
 };
 
 export default function GalleryGroupCard(props) {
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     return (
         <ThemeProvider theme={theme}>
-            <Card sx={{ textAlign: 'right', textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '66vw', height: '66vw', borderRadius: "100%" }}>{card(props.group)}</Card>
+            <Card sx={{ textAlign: 'right', textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '66vw', height: '66vw', borderRadius: "100%" }}>{card(props.group, handleOpen)}</Card>
+            <GroupViewModal handleClose={handleClose} open={open} group={props.group} />
         </ThemeProvider>
     );
 }
