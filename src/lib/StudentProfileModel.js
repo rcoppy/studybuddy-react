@@ -1,10 +1,10 @@
 export default class StudentProfileModel {
-    constructor() {
+    constructor({firstName="Dave", lastName="Danielson", classYear=2023, program="SEAS"} = {}) {
         this.amLookingForGroups = true;
-        this.firstName = "Dave";
-        this.lastName = "Danielson";
-        this.classYear = 2023;
-        this.program = "SEAS";
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.classYear = classYear;
+        this.program = program;
 
         this.contactInfo = {
             email: "dave@gmail.com",

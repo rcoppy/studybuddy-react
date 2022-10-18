@@ -52,7 +52,7 @@ class App extends React.Component {
           <GlobalContext.Provider value={this.state}>
             <Router>
               <AppBar />
-              <Container maxWidth="xl" sx={{ mt: 1 }}>
+              <Container maxWidth="xl" sx={{ mt: 1, overflowX: 'hidden' }}>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/profile/me" element={<MyProfile />} />
