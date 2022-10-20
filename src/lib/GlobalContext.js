@@ -7,4 +7,7 @@ export const GlobalContext = React.createContext({
     updateProfile: () => {},
     uiInfo: new UiInfo(), 
     updateUiInfo: () => {},
+    myGroups: new Map(),
+    addToMyGroups: () => {},
+    removeFromMyGroups: () => {},
 });

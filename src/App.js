@@ -29,6 +29,7 @@ import { GlobalContext } from './lib/GlobalContext';
 import MediaQueryHelper from './utils/MediaQueryHelper';
 import { createTheme, ThemeProvider } from '@mui/material';
 import UiInfo from './lib/UiInfo';
+import { DefaultGroups } from './lib/GroupDataModel';
 
 class App extends React.Component {
 
@@ -47,12 +48,33 @@ class App extends React.Component {
       }));
     };
 
+    this.addToMyGroups = (groupsToAdd) => {
+      const existingGroups = this.state.myGroups; 
+      groupsToAdd.forEach((g) => existingGroups.set(g.title, g)); 
+      this.setState(state => ({
+        myGroups: existingGroups,
+      })); 
+    };
+
+    this.removeFromMyGroups = (groupsToRemove) => {
+      const existingGroups = this.state.myGroups; 
+      groupsToRemove.forEach((g) => existingGroups.delete(g.title)); 
+      this.setState(state => ({
+        myGroups: existingGroups,
+      })); 
+    };
+
     this.state = {
       myProfile: new StudentProfileModel(),
       updateMyProfile: this.updateMyProfile,
       uiInfo: new UiInfo(),
       updateUiInfo: this.updateUiInfo,
+      myGroups: new Map(), 
+      addToMyGroups: this.addToMyGroups, 
+      removeFromMyGroups: this.removeFromMyGroups,
     };
+
+    DefaultGroups.forEach((g) => this.state.myGroups.set(g.title, g));
   }
 
   render() {

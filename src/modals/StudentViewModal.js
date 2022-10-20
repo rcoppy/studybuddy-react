@@ -4,9 +4,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { truncateClassYear } from '../lib/StudentProfileModel';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Chip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SuccessAlertSnackbar from '../widgets/SuccessAlertSnackbar';
+import { GlobalContext } from '../lib/GlobalContext';
 
 const style = {
     position: 'absolute',
@@ -21,7 +22,8 @@ const style = {
 };
 
 
-function dropdown(classes, handler, activeClass) {
+function dropdown(groups, handler, activeGroup) {
+
     const handleChange = (event) => {
         handler(event.target.value);
     };
@@ -29,16 +31,16 @@ function dropdown(classes, handler, activeClass) {
     return (
         <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                <InputLabel id="demo-simple-select-label">Group</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={activeClass}
-                    label="Class"
+                    value={activeGroup}
+                    label="Group"
                     onChange={handleChange}
                 >
-                    {classes.map((value, index) => {
-                        return (<MenuItem key={index} value={value}>{value}</MenuItem>);
+                    {Array.from(groups.keys()).map((name, index) => {
+                        return (<MenuItem key={index} value={name}>{name}</MenuItem>);
                     })}
                 </Select>
             </FormControl>
@@ -48,38 +50,58 @@ function dropdown(classes, handler, activeClass) {
 
 export default function StudentViewModal({ handleClose, open, student }) {
 
-    const [activeClass, setActiveClass] = React.useState(student.classes[0]);
-    const [alertOpen, setAlertOpen] = React.useState(false); 
+    const [activeGroup, setActiveGroup] = React.useState('');
+    const [alertOpen, setAlertOpen] = React.useState(false);
 
     const goToConfirmation = () => {
-        handleClose(); 
+        handleClose();
         setAlertOpen(true);
     };
 
     return (
         <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {student.firstName}
-                    </Typography>
-                    <Typography id="modal-modal-description" mb={2}>
-                        {student.program} {truncateClassYear(student.classYear)}
-                    </Typography>
+            <GlobalContext.Consumer>
+                {({ myGroups }) => 
 
-                    {dropdown(student.classes, setActiveClass, activeClass)}
+                    <>
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    {student.firstName}
+                                </Typography>
+                                <Typography mb={2}> {/* id="modal-modal-description" */}
+                                    {student.program} {truncateClassYear(student.classYear)}
+                                </Typography>
+                                <Typography mb={2}>
+                                    Enrollment in-common
+                                </Typography>
 
-                    <Button variant="contained" sx={{ my: 2 }} startIcon={<AddIcon />} onClick={goToConfirmation}>
-                        Invite to {activeClass}
-                    </Button>
-                </Box>
-            </Modal>
-            <SuccessAlertSnackbar open={alertOpen} setOpen={setAlertOpen} message={"Invited " + student.firstName + " to " + activeClass + "!"}/>
+                                <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }} >
+                                    {student.classes.map((c, index) => {
+                                        return (
+                                            <Box mr={1} mb={1}>
+                                                <Chip key={index} label={c} variant="outlined" size="small" />
+                                            </Box>
+                                        );
+                                    })}
+                                </Box>
+
+                                {dropdown(myGroups, setActiveGroup, activeGroup)}
+
+                                <Button variant="contained" sx={{ my: 2 }} startIcon={<AddIcon />} onClick={goToConfirmation}>
+                                    Invite to {activeGroup}
+                                </Button>
+                            </Box>
+                        </Modal>
+                        <SuccessAlertSnackbar open={alertOpen} setOpen={setAlertOpen} message={"Invited " + student.firstName + " to " + activeGroup + "!"} />
+                    </>
+                }
+            </GlobalContext.Consumer>
         </div>
     );
 }
