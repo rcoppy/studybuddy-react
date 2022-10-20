@@ -26,6 +26,9 @@ import BlockList from './views/BlockList';
 import * as React from 'react';
 import StudentProfileModel from './lib/StudentProfileModel';
 import { GlobalContext } from './lib/GlobalContext';
+import MediaQueryHelper from './utils/MediaQueryHelper';
+import { createTheme, ThemeProvider } from '@mui/material';
+import UiInfo from './lib/UiInfo';
 
 class App extends React.Component {
 
@@ -38,9 +41,17 @@ class App extends React.Component {
       }));
     };
 
+    this.updateUiInfo = (newUiInfo) => {
+      this.setState(state => ({
+        uiInfo: newUiInfo,
+      }));
+    };
+
     this.state = {
       myProfile: new StudentProfileModel(),
       updateMyProfile: this.updateMyProfile,
+      uiInfo: new UiInfo(),
+      updateUiInfo: this.updateUiInfo,
     };
   }
 
@@ -52,7 +63,8 @@ class App extends React.Component {
           <GlobalContext.Provider value={this.state}>
             <Router>
               <AppBar />
-              <Container maxWidth="xl" sx={{ mt: 1, overflowX: 'hidden' }}>
+              <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
+              <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/profile/me" element={<MyProfile />} />

@@ -5,44 +5,49 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Stack, IconButton, Avatar, Chip, CardActionArea } from '@mui/material';
+import { Stack, IconButton, Avatar, Chip, CardActionArea, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import orange from '@mui/material/colors/orange';
 import GroupIcon from '@mui/icons-material/Group';
 import GroupViewModal from '../modals/GroupViewModal';
+import { useTheme } from '@emotion/react';
 
+const CustomCard = styled(Card)(({diameter}) => ({
+    textlign: 'right',
+    textDecoration: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    width: diameter + ' !important',
+    height: diameter + ' !important',
+    borderRadius: "100%",
+}));
 
-const theme = createTheme({
-    palette: {
-        mode: 'light',
-        background: {
-            paper: orange[200],
-            chip: orange[100],
-        },
-    },
-});
 
 const CustomChip = styled(Chip)(({ theme }) => ({
     backgroundColor: theme.palette.background.chip,
 }));
 
+
+
 function card(group, handleOpen) {
     return (
-        <CardActionArea onClick={handleOpen} >
-            <CardContent mt={2} sx={{ height: '66vw', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <CardActionArea onClick={handleOpen} sx={{ width: 'inherit', height: 'inherit' }}>
+            <CardContent mt={2} sx={{ width: 'inherit', height: 'inherit', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Stack direction="column" sx={{ minWidth: '30%', mt: 3 }}>
+                    <Stack direction="column" sx={{ minWidth: '30%', maxWidth: '60%', mt: 3 }}>
                         <Typography variant="h5">
                             {group.title}
                         </Typography>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        {group.subject}, {group.students.length} members
+                            {group.subject}, {group.students.length} members
                         </Typography>
                     </Stack>
 
                     <GroupIcon
-                        sx={{ width: '28vw', height: '28vw', ml: 1, mb: 1 }}
+                        sx={{ width: '40%', ml: 1, mb: 1 }}
                     />
 
 
@@ -73,9 +78,21 @@ export default function GalleryGroupCard(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const theme = createTheme(useTheme(), {
+        palette: {
+            mode: 'light',
+            background: {
+                paper: orange[200],
+                chip: orange[100],
+            },
+        },
+    });
+
+    const diameter = useMediaQuery(theme.breakpoints.up('sm')) ? '10vw' : '60vw';
+
     return (
         <ThemeProvider theme={theme}>
-            <Card sx={{ textAlign: 'right', textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '66vw', height: '66vw', borderRadius: "100%" }}>{card(props.group, handleOpen)}</Card>
+            <CustomCard diameter={diameter}>{card(props.group, handleOpen)}</CustomCard>
             <GroupViewModal handleClose={handleClose} open={open} group={props.group} />
         </ThemeProvider>
     );
