@@ -162,7 +162,7 @@ function AppBar() {
                     </Toolbar>
                 </Container>
             </MuiAppBar>
-            <Alert severity="info">This is an info alert — check it out!</Alert>
+            {/* <Alert severity="info">This is an info alert — check it out!</Alert> */}
         </>);
 }
 

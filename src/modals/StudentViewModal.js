@@ -22,7 +22,7 @@ const style = {
 };
 
 
-function dropdown(groups, handler, activeGroup) {
+function dropdown(classes, groups, handler, activeGroup) {
 
     const handleChange = (event) => {
         handler(event.target.value);
@@ -39,8 +39,11 @@ function dropdown(groups, handler, activeGroup) {
                     label="Group"
                     onChange={handleChange}
                 >
-                    {Array.from(groups.keys()).map((name, index) => {
-                        return (<MenuItem key={index} value={name}>{name}</MenuItem>);
+                    {Array.from(groups.values()).map((group, index) => {
+                        if (!classes.includes(group.subject)) return <></>;
+
+                        const concat = `${group.title} (${group.subject})`;
+                        return (<MenuItem key={index} value={concat}>{concat}</MenuItem>);
                     })}
                 </Select>
             </FormControl>
@@ -91,7 +94,7 @@ export default function StudentViewModal({ handleClose, open, student }) {
                                     })}
                                 </Box>
 
-                                {dropdown(myGroups, setActiveGroup, activeGroup)}
+                                {dropdown(student.classes, myGroups, setActiveGroup, activeGroup)}
 
                                 <Button variant="contained" sx={{ my: 2 }} startIcon={<AddIcon />} onClick={goToConfirmation}>
                                     Invite to {activeGroup}
