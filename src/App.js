@@ -24,13 +24,14 @@ import MyAvailability from './views/MyAvailability';
 import Onboarding from './views/Onboarding';
 import BlockList from './views/BlockList';
 import * as React from 'react';
-import StudentProfileModel from './lib/StudentProfileModel';
+import StudentProfileModel, { DefaultStudents } from './lib/StudentProfileModel';
 import { GlobalContext } from './lib/GlobalContext';
 import MediaQueryHelper from './utils/MediaQueryHelper';
 import { createTheme, ThemeProvider } from '@mui/material';
 import UiInfo from './lib/UiInfo';
 import { DefaultGroups } from './lib/GroupDataModel';
 import { DefaultInvites } from './lib/InviteModel';
+import { DefaultClasses } from './lib/ClassModel';
 
 class App extends React.Component {
 
@@ -66,6 +67,22 @@ class App extends React.Component {
     };
 
     this.store = {};
+
+    this.store.addClasses = (classesToAdd) => {
+      const existingClasses = this.state.store.classes;
+      classesToAdd.forEach((g) => existingClasses.set(g.uuid, g));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.removeClasses = (classesToRemove) => {
+      const existingClasses = this.state.store.classes;
+      classesToRemove.forEach((g) => existingClasses.delete(g.uuid));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
 
     this.store.addGroups = (groupsToAdd) => {
       const existingGroups = this.state.store.groups;
@@ -115,6 +132,22 @@ class App extends React.Component {
       }));
     };
 
+    this.store.addStudents = (studentsToAdd) => {
+      const existingStudents = this.state.store.students;
+      studentsToAdd.forEach((i) => existingStudents.set(i.uuid, i));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.removeStudents = (studentsToRemove) => {
+      const existingStudents = this.state.store.students;
+      studentsToRemove.forEach((i) => existingStudents.delete(i.uuid));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
     this.store.sendMessages = (messagesToSend) => {
       const existingMessages = this.state.store.messages;
       messagesToSend.forEach((i) => existingMessages.set(i.uuid, i));
@@ -157,12 +190,42 @@ class App extends React.Component {
         messages: new Map(), 
         sendMessages: this.store.sendMessages,
         deleteMessages: this.store.deleteMessages,
+
+        classes: new Map(), 
+        addClasses: this.store.addClasses,
+        removeClasses: this.store.removeClasses,
+
+        students: new Map(), 
+        addStudents: this.store.addStudents,
+        removeStudents: this.store.removeStudents,
       },
     };
 
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    // seed config
     this.state.store.profiles.set(this.state.myProfile.uuid, this.state.myProfile); 
     DefaultGroups.forEach((g) => this.state.myGroups.set(g.uuid, g));
     DefaultInvites.forEach((i) => this.state.store.invites.set(i.uuid, i));
+    DefaultStudents.forEach((i) => this.state.store.students.set(i.uuid, i));
+    DefaultClasses.forEach((c) => {
+      this.state.store.classes.set(c.uuid, c);
+      this.state.myProfile.classes.set(c.uuid, c);
+
+      // assign classes to students randomly
+      Array.from(this.state.store.students.values()).forEach((s) => {
+        if (getRandomInt(10) > 5) {
+          s.classes.set(c.uuid, c);
+        }
+      });
+
+
+    });
+
+    console.log(this.state.store.students);
+    
   }
 
   render() {

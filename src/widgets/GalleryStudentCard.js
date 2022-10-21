@@ -51,10 +51,10 @@ function card(student, handleOpen) {
 
 
         <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }} >
-          {student.classes.map((c, index) => {
+          {Array.from(student.classes.values()).map((c, index) => {
             return (
               <Box mr={1} mb={1}>
-                <CustomChip key={index} label={c} variant="outlined" size="small" />
+                <CustomChip key={index} label={c.code} variant="outlined" size="small" />
               </Box>
             );
           })}

@@ -14,11 +14,7 @@ export default class StudentProfileModel {
             phone: "(203) 755-4321",
         };
 
-        this.classes = [
-            "COMS 4111",
-            "COMS 4170",
-            "COMS 3261",
-        ];
+        this.classes = new Map();
 
         this.interests = [
             "Biking",
@@ -32,3 +28,13 @@ export function truncateClassYear(year) {
     const str = year.toString();
     return "'" + str.substring(str.length - 2, str.length);
 }
+
+export const DefaultStudents = [
+    new StudentProfileModel({ firstName: "Jane" }),
+    new StudentProfileModel({ firstName: "Akash" }),
+    new StudentProfileModel({ firstName: "Henderson" }),
+    new StudentProfileModel({ firstName: "Jacob" }),
+    new StudentProfileModel({ firstName: "Jeffrey" }),
+    new StudentProfileModel({ firstName: "Palmer" }),
+    new StudentProfileModel({ firstName: "Genevieve" }),
+]

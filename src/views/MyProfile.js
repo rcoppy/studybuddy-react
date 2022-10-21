@@ -40,7 +40,7 @@ function MyProfile() {
     return (
         <>
             <GlobalContext.Consumer>
-                {({myProfile, updateMyProfile}) => (<>
+                {({myProfile, updateMyProfile, store}) => (<>
                     <Typography variant="h3">My profile</Typography>
 
                     <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 1 }}>
@@ -83,9 +83,10 @@ function MyProfile() {
                     </Typography>
 
                     <Stack direction="row" sx={{ display: 'flex', justifyContent: 'center', mr: 2, ml: 2, mb: 2 }} spacing={1}>
-                        {myProfile.classes.map((c, index) => {
+                        {Array.from(myProfile.classes.values()).map((c, index) => {
+                                                        
                             return (
-                                <Chip key={index} label={c} variant="outlined" />
+                                <Chip key={index} label={c.code} variant="outlined" />
                             );
                         })}
                     </Stack>
