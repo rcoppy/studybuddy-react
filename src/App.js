@@ -30,6 +30,7 @@ import MediaQueryHelper from './utils/MediaQueryHelper';
 import { createTheme, ThemeProvider } from '@mui/material';
 import UiInfo from './lib/UiInfo';
 import { DefaultGroups } from './lib/GroupDataModel';
+import { DefaultInvites } from './lib/InviteModel';
 
 class App extends React.Component {
 
@@ -49,19 +50,86 @@ class App extends React.Component {
     };
 
     this.addToMyGroups = (groupsToAdd) => {
-      const existingGroups = this.state.myGroups; 
-      groupsToAdd.forEach((g) => existingGroups.set(g.title, g)); 
+      const existingGroups = this.state.myGroups;
+      groupsToAdd.forEach((g) => existingGroups.set(g.title, g));
       this.setState(state => ({
         myGroups: existingGroups,
-      })); 
+      }));
     };
 
     this.removeFromMyGroups = (groupsToRemove) => {
-      const existingGroups = this.state.myGroups; 
-      groupsToRemove.forEach((g) => existingGroups.delete(g.title)); 
+      const existingGroups = this.state.myGroups;
+      groupsToRemove.forEach((g) => existingGroups.delete(g.title));
       this.setState(state => ({
         myGroups: existingGroups,
-      })); 
+      }));
+    };
+
+    this.store = {};
+
+    this.store.addGroups = (groupsToAdd) => {
+      const existingGroups = this.state.store.groups;
+      groupsToAdd.forEach((g) => existingGroups.set(g.uuid, g));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.removeGroups = (groupsToRemove) => {
+      const existingGroups = this.state.store.groups;
+      groupsToRemove.forEach((g) => existingGroups.delete(g.uuid));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.addProfiles = (profilesToAdd) => {
+      const existingProfiles = this.state.store.profiles;
+      profilesToAdd.forEach((p) => existingProfiles.set(p.uuid, p));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.removeProfiles = (profilesToRemove) => {
+      const existingProfiles = this.state.store.profiles;
+      profilesToRemove.forEach((p) => existingProfiles.delete(p.uuid));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.addInvites = (invitesToAdd) => {
+      const existingInvites = this.state.store.invites;
+      invitesToAdd.forEach((i) => existingInvites.set(i.uuid, i));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.removeInvites = (invitesToRemove) => {
+      const existingInvites = this.state.store.invites;
+      invitesToRemove.forEach((i) => existingInvites.delete(i.uuid));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.sendMessages = (messagesToSend) => {
+      const existingMessages = this.state.store.messages;
+      messagesToSend.forEach((i) => existingMessages.set(i.uuid, i));
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
+    this.store.deleteMessages = (messagesToDelete) => {
+      const existingMessages = this.state.store.messages;
+      messagesToDelete.forEach((i) => existingMessages.delete(i.uuid));
+
+      this.setState(state => ({
+        store: this.state.store,
+      }));
     };
 
     this.state = {
@@ -69,12 +137,32 @@ class App extends React.Component {
       updateMyProfile: this.updateMyProfile,
       uiInfo: new UiInfo(),
       updateUiInfo: this.updateUiInfo,
-      myGroups: new Map(), 
-      addToMyGroups: this.addToMyGroups, 
+      myGroups: new Map(),
+      addToMyGroups: this.addToMyGroups,
       removeFromMyGroups: this.removeFromMyGroups,
+
+      store: {
+        profiles: new Map(),
+        addProfiles: this.store.addProfiles,
+        removeProfiles: this.store.removeProfiles,
+
+        groups: new Map(),
+        addGroups: this.store.addProfiles,
+        removeGroups: this.store.removeProfiles,
+
+        invites: new Map(),
+        addInvites: this.store.addInvites,
+        removeInvites: this.store.removeInvites,
+
+        messages: new Map(), 
+        sendMessages: this.store.sendMessages,
+        deleteMessages: this.store.deleteMessages,
+      },
     };
 
-    DefaultGroups.forEach((g) => this.state.myGroups.set(g.title, g));
+    this.state.store.profiles.set(this.state.myProfile.uuid, this.state.myProfile); 
+    DefaultGroups.forEach((g) => this.state.myGroups.set(g.uuid, g));
+    DefaultInvites.forEach((i) => this.state.store.invites.set(i.uuid, i));
   }
 
   render() {

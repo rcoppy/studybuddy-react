@@ -5,9 +5,13 @@ import UiInfo from './UiInfo';
 export const GlobalContext = React.createContext({
     myProfile: new StudentProfileModel(),
     updateProfile: () => {},
+
     uiInfo: new UiInfo(), 
     updateUiInfo: () => {},
+
     myGroups: new Map(),
     addToMyGroups: () => {},
     removeFromMyGroups: () => {},
+
+    store: {}
 });

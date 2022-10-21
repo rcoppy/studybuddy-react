@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export default class GroupDataModel {
     constructor({title="UI Design study buddies", subject="COMS 4170", section=1, adminId=1, students=[]} = {}) {
         this.isLookingForMembers = true;
@@ -6,6 +8,7 @@ export default class GroupDataModel {
         this.section = section;
         this.adminId = adminId;
         this.students = students; 
+        this.uuid = uuidv4(); 
     }
 }
 

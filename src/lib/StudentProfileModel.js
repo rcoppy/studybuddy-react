@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export default class StudentProfileModel {
     constructor({firstName="Dave", lastName="Danielson", classYear=2023, program="SEAS"} = {}) {
         this.amLookingForGroups = true;
@@ -5,6 +7,7 @@ export default class StudentProfileModel {
         this.lastName = lastName;
         this.classYear = classYear;
         this.program = program;
+        this.uuid = uuidv4();
 
         this.contactInfo = {
             email: "dave@gmail.com",
