@@ -1,4 +1,6 @@
+import { Typography } from "@mui/material";
 import { GlobalContext } from "../lib/GlobalContext";
+import ThreadSummary from "../widgets/messaging/ThreadPreview";
 
 function Messages() {
     return (
@@ -21,7 +23,14 @@ function Messages() {
                     console.log(profiles);
 
                     return (<>
-                        <h1>Message threads</h1>
+                        <Typography variant="h3">Conversations</Typography>
+
+                        <ThreadSummary />
+                        <ThreadSummary />
+                        <ThreadSummary />
+                        <ThreadSummary />
+
+
                         <ul>
 
                             { messages.map((msg, index) => {
