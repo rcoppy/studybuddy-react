@@ -12,10 +12,10 @@ function GalleryLinks({shouldShow}) {
 
     return <>
         <Button variant="contained" sx={{ mb: 2 }} startIcon={<SearchIcon />} component={Link} to="/gallery/groups">
-            Explore groups
+            Join groups
         </Button>
         <Button variant="contained" sx={{ mb: 2 }} startIcon={<SearchIcon />} component={Link} to="/gallery/students">
-            Explore students
+            Invite students
         </Button>
         <Divider sx={{ mb: 2 }} />
     </>;
@@ -29,10 +29,10 @@ function Home() {
                     <CreateGroupFab />
                     {/* <Typography variant="h4">You are currently <em>{myProfile.amLookingForGroups ? "looking" : "not looking"}</em> for groups.</Typography> */}
 
-                    <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Container maxWidth="md" sx={{ height: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <GalleryLinks shouldShow={myProfile.amLookingForGroups} />
                         <GroupsIcon />
-                        <Typography variant="p"><em>Your active groups will appear here.</em></Typography>
+                        <Typography variant="p" fontSize='0.8rem'><em>The study groups you join will appear here.</em></Typography>
                     </Container>
                 </>}
             </GlobalContext.Consumer>

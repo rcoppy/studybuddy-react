@@ -84,12 +84,12 @@ function AppBar() {
                                 <MenuItem component={Link} to="/profile/me">
                                     <Avatar />Profile
                                 </MenuItem>
-                                <MenuItem component={Link} to="/group/me">
+                                {/* <MenuItem component={Link} to="/group/me">
                                     <ListItemIcon>
                                         <GroupIcon fontSize="small" />
                                     </ListItemIcon>
                                     My Groups
-                                </MenuItem>
+                                </MenuItem> */}
                                 <Divider />
                                 <MenuItem component={Link} to="/blocklist">
                                     <ListItemIcon>
@@ -131,7 +131,7 @@ function AppBar() {
                                     <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
                                 </IconButton>
                             </Tooltip>
-                            <Typography variant="h6">
+                            <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>
                                 StudyBuddies
                             </Typography>
                         </Stack>
@@ -151,13 +151,13 @@ function AppBar() {
                                 </IconButton>
                             </Link>
 
-                            <Link to="/invites">
+                            {/* <Link to="/invites">
                                 <IconButton aria-label="see invites" component="label">
                                     <Badge badgeContent={14} color="warning">
                                         <NotificationsIcon color="primary[50]" />
                                     </Badge>
                                 </IconButton>
-                            </Link>
+                            </Link> */}
                         </Stack>
                     </Toolbar>
                 </Container>
