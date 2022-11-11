@@ -37,7 +37,7 @@ export default function ThreadPreview() {
                 </IconButton>
             </Stack>
 
-            <CardActionArea className='right' onClick={() => setPending(false)} sx={{
+            <CardActionArea className='right' component={Link} to="/messages/1" onClick={() => setPending(false)} sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',

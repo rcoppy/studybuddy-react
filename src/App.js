@@ -32,6 +32,9 @@ import UiInfo from './lib/UiInfo';
 import { DefaultGroups } from './lib/GroupDataModel';
 import { DefaultInvites } from './lib/InviteModel';
 import { DefaultClasses } from './lib/ClassModel';
+import { palette } from '@mui/system';
+import { light } from '@mui/material/styles/createPalette';
+import { blue, lightGreen } from '@mui/material/colors';
 
 class App extends React.Component {
 
@@ -187,15 +190,15 @@ class App extends React.Component {
         addInvites: this.store.addInvites,
         removeInvites: this.store.removeInvites,
 
-        messages: new Map(), 
+        messages: new Map(),
         sendMessages: this.store.sendMessages,
         deleteMessages: this.store.deleteMessages,
 
-        classes: new Map(), 
+        classes: new Map(),
         addClasses: this.store.addClasses,
         removeClasses: this.store.removeClasses,
 
-        students: new Map(), 
+        students: new Map(),
         addStudents: this.store.addStudents,
         removeStudents: this.store.removeStudents,
       },
@@ -206,7 +209,7 @@ class App extends React.Component {
     }
 
     // seed config
-    this.state.store.profiles.set(this.state.myProfile.uuid, this.state.myProfile); 
+    this.state.store.profiles.set(this.state.myProfile.uuid, this.state.myProfile);
     DefaultGroups.forEach((g) => this.state.myGroups.set(g.uuid, g));
     DefaultInvites.forEach((i) => this.state.store.invites.set(i.uuid, i));
     DefaultStudents.forEach((i) => this.state.store.students.set(i.uuid, i));
@@ -225,37 +228,42 @@ class App extends React.Component {
     });
 
     console.log(this.state.store.students);
-    
+
   }
 
   render() {
+
+    const theme = createTheme({ palette: { mode: 'light', primary: blue, secondary: lightGreen } });
+
     return (
       <>
         <CssBaseline />
         <div className="App">
           <GlobalContext.Provider value={this.state}>
-            <Router>
-              <AppBar />
-              <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
-              <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/profile/me" element={<MyProfile />} />
-                  <Route path="/profile/:id" element={<StudentProfile />} />
-                  <Route path="/gallery/students" element={<StudentsGallery />} />
-                  <Route path="/gallery/groups" element={<GroupsGallery />} />
-                  <Route path="/group/me" element={<MyGroups />} />
-                  <Route path="/group/new" element={<CreateGroup />} />
-                  <Route path="/group/:id" element={<GroupProfile />} />
-                  <Route path="/invites" element={<Invites />} />
-                  <Route path="/messages" element={<Messages />} />
-                  <Route path="/messages/:id" element={<MessageThread />} />
-                  <Route path="/availability" element={<MyAvailability />} />
-                  <Route path="/welcome" element={<Onboarding />} />
-                  <Route path="/blocklist" element={<BlockList />} />
-                </Routes>
-              </Container>
-            </Router>
+            <ThemeProvider theme={theme}>
+              <Router>
+                <AppBar />
+                <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
+                <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profile/me" element={<MyProfile />} />
+                    <Route path="/profile/:id" element={<StudentProfile />} />
+                    <Route path="/gallery/students" element={<StudentsGallery />} />
+                    <Route path="/gallery/groups" element={<GroupsGallery />} />
+                    <Route path="/group/me" element={<MyGroups />} />
+                    <Route path="/group/new" element={<CreateGroup />} />
+                    <Route path="/group/:id" element={<GroupProfile />} />
+                    <Route path="/invites" element={<Invites />} />
+                    <Route path="/messages" element={<Messages />} />
+                    <Route path="/messages/:id" element={<MessageThread />} />
+                    <Route path="/availability" element={<MyAvailability />} />
+                    <Route path="/welcome" element={<Onboarding />} />
+                    <Route path="/blocklist" element={<BlockList />} />
+                  </Routes>
+                </Container>
+              </Router>
+            </ThemeProvider>
           </GlobalContext.Provider>
         </div>
       </>
