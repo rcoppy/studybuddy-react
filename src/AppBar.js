@@ -27,6 +27,7 @@ import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 import BlockIcon from '@mui/icons-material/Block';
 import GroupIcon from '@mui/icons-material/Group';
 import Alert from '@mui/material/Alert';
+import AvatarImage from './static/images/avatar.jpg';
 
 
 function AppBar() {
@@ -82,7 +83,7 @@ function AppBar() {
                                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                             >
                                 <MenuItem component={Link} to="/profile/me">
-                                    <Avatar />Profile
+                                    <Avatar alt="Profile picture" src={AvatarImage} />Profile
                                 </MenuItem>
                                 {/* <MenuItem component={Link} to="/group/me">
                                     <ListItemIcon>
@@ -128,7 +129,7 @@ function AppBar() {
                                     aria-haspopup="true"
                                     aria-expanded={open ? 'true' : undefined}
                                 >
-                                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                                    <Avatar sx={{ width: 32, height: 32 }}  alt="Profile picture" src={AvatarImage} />
                                 </IconButton>
                             </Tooltip>
                             <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>

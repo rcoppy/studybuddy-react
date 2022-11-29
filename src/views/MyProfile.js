@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import StudentProfileModel from '../lib/StudentProfileModel';
 import { GlobalContext } from '../lib/GlobalContext';
+import AvatarImage from '../static/images/avatar.jpg';
 
 function truncateClassYear(year) {
     const str = year.toString();
@@ -46,8 +47,8 @@ function MyProfile() {
                     <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 1 }}>
                         <Stack direction="column" spacing={1} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Avatar
-                                alt="My profile photo"
-                                // src="/static/images/avatar/1.jpg"
+                                alt={`${myProfile.firstName} ${myProfile.lastName}`}
+                                src={AvatarImage}
                                 sx={{ width: '30vw', height: '30vw', mb: 1 }}
                             />
                             <Typography variant="h4" sx={{ textAlign: 'center' }}>{myProfile.firstName} {myProfile.lastName}, {myProfile.program} {truncateClassYear(myProfile.classYear)}
