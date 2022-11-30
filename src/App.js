@@ -198,9 +198,9 @@ class App extends React.Component {
         addClasses: this.store.addClasses,
         removeClasses: this.store.removeClasses,
 
-        students: new Map(),
-        addStudents: this.store.addStudents,
-        removeStudents: this.store.removeStudents,
+        // students: new Map(),
+        // addStudents: this.store.addStudents,
+        // removeStudents: this.store.removeStudents,
       },
     };
 
@@ -210,25 +210,49 @@ class App extends React.Component {
 
     // seed config
     this.state.store.profiles.set(this.state.myProfile.uuid, this.state.myProfile);
-    DefaultGroups.forEach((g) => this.state.myGroups.set(g.uuid, g));
     DefaultInvites.forEach((i) => this.state.store.invites.set(i.uuid, i));
-    DefaultStudents.forEach((i) => this.state.store.students.set(i.uuid, i));
+    DefaultStudents.forEach((i) => {
+      // this.state.store.students.set(i.uuid, i);
+      this.state.store.profiles.set(i.uuid, i);
+    });
+
     DefaultClasses.forEach((c) => {
       this.state.store.classes.set(c.uuid, c);
       this.state.myProfile.classes.set(c.uuid, c);
 
       // assign classes to students randomly
-      Array.from(this.state.store.students.values()).forEach((s) => {
+      Array.from(this.state.store.profiles.values()).forEach((s) => {
         if (getRandomInt(10) > 5) {
           s.classes.set(c.uuid, c);
         }
       });
 
-
     });
 
-    console.log(this.state.store.students);
+    DefaultGroups.forEach((g) => {
+      const studentIds = [];
 
+      // TODO: make this filtering by uuid, not title string
+      for (const s of this.state.store.profiles.values()) {
+        const classCodes = Array.from(s.classes.values()).map(c => c.code);
+
+        console.log(classCodes);
+
+        if (classCodes.includes(g.subject) && getRandomInt(10) > 5) {
+          studentIds.push(s.uuid);
+        }
+      }
+
+      console.log(studentIds);
+
+      const modifiedGroup = Object.assign(g, {
+        students: studentIds,
+        adminId: studentIds[getRandomInt(studentIds.length)]
+      });
+      this.state.store.groups.set(g.uuid, modifiedGroup);
+    });
+
+    console.log(this.state.store.groups);
   }
 
   render() {
