@@ -46,8 +46,6 @@ function MessageThreads({ myProfile, messages, profiles, openMessage = () => {} 
             const isUnopened = !msg.wasOpened; 
 
             return <ThreadSummary index={key} name={fullName} lastSender={senderName} message={msg} isUnopened={isUnopened} openMessage={openMessage} />
-            
-            // <li>{msg.message}, from {profiles.get(msg.sender)?.firstName}; to {profiles.get(msg.recipient)?.firstName}</li>;
         })}
     </>;
 }
@@ -61,20 +59,7 @@ function Messages() {
 
                     return (<>
                         <Typography variant="h3">Conversations</Typography>
-
                         <MessageThreads myProfile={myProfile} messages={store.messages} profiles={store.profiles} openMessage={msg => store.setMessagesAsOpened([msg])} />
-
-
-                        {/* <ul>
-
-                            {messages.map((msg, index) => {
-
-                                console.log("message sender:");
-                                console.log(msg.sender);
-
-                                return <li>{msg.message}, from {profiles.get(msg.sender)?.firstName}; to {profiles.get(msg.recipient)?.firstName}</li>;
-                            })}
-                        </ul> */}
                     </>);
                 }}
             </GlobalContext.Consumer>
