@@ -5,8 +5,9 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Card, CardContent, ThemeProvider, Typography, useTheme } from '@mui/material';
 import { createTheme } from '@mui/system';
+import { messageTimeFromDate } from '../../utils/dateTime';
 
-export default function ChatBubble({ isSender }) {
+export default function ChatBubble({ isSender, message }) {
 
     const baseTheme = useTheme();
 
@@ -27,8 +28,8 @@ export default function ChatBubble({ isSender }) {
         <ThemeProvider theme={theme}>
             <Card sx={{borderRadius: 3, mb: 3, width: '65%', position: 'relative', left: offset }}>
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='p'>Laundry is the biggest way to do fun things together!</Typography>
-                    <Typography fontSize='0.8rem' variant='p' textAlign='right'>21m</Typography>
+                    <Typography variant='p'>{message.message}</Typography>
+                    <Typography fontSize='0.8rem' variant='p' textAlign='right'>{messageTimeFromDate(message.timestamp)}</Typography>
                 </CardContent>
             </Card>
         </ThemeProvider>

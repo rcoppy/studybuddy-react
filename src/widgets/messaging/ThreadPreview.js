@@ -8,6 +8,7 @@ import { Stack } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/system';
+import { messageTimeFromDate } from '../../utils/dateTime';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -18,19 +19,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-const timeFromDate = (date) => {
-    
-    let options = {
-        // weekday: "long", year: "numeric", month: "short",
-        // day: "numeric", 
-        hour: "2-digit", minute: "2-digit"
-    };
-
-    return date.toLocaleTimeString("en-us", options);
-};
-
-
-export default function ThreadPreview({ name, lastSender, message, isUnopened = false, openMessage = () => {} }) {
+export default function ThreadPreview({ name, lastSender, message, isUnopened = false, openMessage = () => {}, threadId }) {
     const [pending, setPending] = React.useState(isUnopened);
 
     const handleClick = () => {
@@ -53,7 +42,7 @@ export default function ThreadPreview({ name, lastSender, message, isUnopened = 
                 </IconButton>
             </Stack>
 
-            <CardActionArea className='right' component={Link} to={`/messages/${message.uuid}`} onClick={handleClick} sx={{
+            <CardActionArea className='right' component={Link} to={`/messages/${threadId}`} onClick={handleClick} sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -65,7 +54,7 @@ export default function ThreadPreview({ name, lastSender, message, isUnopened = 
             }}>
                 <Stack direction='row' sx={{ alignSelf: 'stretch', display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="p">{name}</Typography>
-                    <Typography variant="p">{timeFromDate(new Date(message.timestamp))}</Typography>
+                    <Typography variant="p">{messageTimeFromDate(message.timestamp)}</Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     <Typography variant="p" fontSize='0.7rem'>{lastSender}: {message.message}</Typography>
