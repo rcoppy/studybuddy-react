@@ -6,11 +6,11 @@ import hash from "../utils/cyrb53";
 function getHashFromUserIds(id1, id2) {
     const h1 = hash(id1);
     const h2 = hash(id2);
-    const xor = h1 ^ h2; 
-    return hash(xor.toString()); // equivalent to hash(h2 + h1)
+    const xor = h1 ^ h2; // equivalent to h2 ^ h1
+    return hash(xor.toString());
 }
 
-function getMessageThreads(myProfile, messages, profiles) {
+function getMessageThreadsMap(myProfile, messages) {
 
     const myId = myProfile.uuid;
 
@@ -34,7 +34,26 @@ function getMessageThreads(myProfile, messages, profiles) {
         messageThreadsMap.set(threadId, msg);
     }
 
-    console.log(messageThreadsMap);
+    return messageThreadsMap;
+}
+
+function MessageThreads({ myProfile, messages, profiles }) {
+
+    const threadsMap = getMessageThreadsMap(myProfile, messages);
+
+    return <>
+        {Array.from(threadsMap.entries()).map((index, msg) => {
+            const displayedUser = msg.recipient === myProfile.uuid 
+                ? profiles.get(msg.sender) : profiles.get(msg.recipient); 
+
+            const fullName = `${displayedUser.firstName} ${displayedUser.lastName}`; 
+            const senderName = profiles.get(msg.sender).firstName; 
+
+            return <ThreadSummary index={index} name={fullName} lastSender={senderName} message={msg} />
+            
+            // <li>{msg.message}, from {profiles.get(msg.sender)?.firstName}; to {profiles.get(msg.recipient)?.firstName}</li>;
+        })}
+    </>;
 }
 
 function Messages() {
@@ -44,21 +63,13 @@ function Messages() {
             <GlobalContext.Consumer>
                 {({ myProfile, store }) => {
 
-                    const profiles = store.profiles;
-                    const messages = Array.from(store.messages.values());
-
-                    getMessageThreads(myProfile, store.messages, store.profiles);
-
                     return (<>
                         <Typography variant="h3">Conversations</Typography>
 
-                        <ThreadSummary />
-                        <ThreadSummary />
-                        <ThreadSummary />
-                        <ThreadSummary />
+                        <MessageThreads myProfile={myProfile} messages={store.messages} profiles={store.profiles} />
 
 
-                        <ul>
+                        {/* <ul>
 
                             {messages.map((msg, index) => {
 
@@ -67,7 +78,7 @@ function Messages() {
 
                                 return <li>{msg.message}, from {profiles.get(msg.sender)?.firstName}; to {profiles.get(msg.recipient)?.firstName}</li>;
                             })}
-                        </ul>
+                        </ul> */}
                     </>);
                 }}
             </GlobalContext.Consumer>

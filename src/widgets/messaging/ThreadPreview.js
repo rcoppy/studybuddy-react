@@ -18,8 +18,19 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
+const timeFromDate = (date) => {
+    
+    let options = {
+        // weekday: "long", year: "numeric", month: "short",
+        // day: "numeric", 
+        hour: "2-digit", minute: "2-digit"
+    };
 
-export default function ThreadPreview() {
+    return date.toLocaleTimeString("en-us", options);
+};
+
+
+export default function ThreadPreview({ name, lastSender, message }) {
     const [pending, setPending] = React.useState(true);
 
     return (
@@ -32,7 +43,7 @@ export default function ThreadPreview() {
             <Stack className='left'>
                 <IconButton aria-label='avatar'>
                     <StyledBadge color="primary" badgeContent=' ' invisible={!pending}>
-                        <Avatar sx={{ width: '3.5rem', height: '3.5rem' }}>AR</Avatar>
+                        <Avatar sx={{ width: '3.5rem', height: '3.5rem' }}>{name}</Avatar>
                     </StyledBadge>
                 </IconButton>
             </Stack>
@@ -48,11 +59,11 @@ export default function ThreadPreview() {
                 minWidth: 0
             }}>
                 <Stack direction='row' sx={{ alignSelf: 'stretch', display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="p">Name</Typography>
-                    <Typography variant="p">11:43pm</Typography>
+                    <Typography variant="p">{name}</Typography>
+                    <Typography variant="p">{timeFromDate(new Date(message.timestamp))}</Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    <Typography variant="p" fontSize='0.7rem'>Lorem ipsum dolor sit amet consectetur adipiscing</Typography>
+                    <Typography variant="p" fontSize='0.7rem'>{lastSender.firstName}: {message.message}</Typography>
                 </Stack>
             </CardActionArea>
 
