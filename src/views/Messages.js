@@ -1,14 +1,7 @@
 import { Typography } from "@mui/material";
 import { GlobalContext } from "../lib/GlobalContext";
 import ThreadSummary from "../widgets/messaging/ThreadPreview";
-import hash from "../utils/cyrb53";
-
-function getHashFromUserIds(id1, id2) {
-    const h1 = hash(id1);
-    const h2 = hash(id2);
-    const xor = h1 ^ h2; // equivalent to h2 ^ h1
-    return hash(xor.toString());
-}
+import { getHashFromUserIds } from "../utils/hashing";
 
 function getMessageThreadsMap(myProfile, messages) {
 
@@ -37,19 +30,22 @@ function getMessageThreadsMap(myProfile, messages) {
     return messageThreadsMap;
 }
 
-function MessageThreads({ myProfile, messages, profiles }) {
+function MessageThreads({ myProfile, messages, profiles, openMessage = () => {} }) {
 
     const threadsMap = getMessageThreadsMap(myProfile, messages);
 
     return <>
-        {Array.from(threadsMap.entries()).map((index, msg) => {
+        {Array.from(threadsMap.entries()).map(([key, msg]) => {
             const displayedUser = msg.recipient === myProfile.uuid 
                 ? profiles.get(msg.sender) : profiles.get(msg.recipient); 
 
             const fullName = `${displayedUser.firstName} ${displayedUser.lastName}`; 
-            const senderName = profiles.get(msg.sender).firstName; 
+            const senderName = msg.sender === myProfile.uuid 
+                ? "You" : profiles.get(msg.sender).firstName; 
 
-            return <ThreadSummary index={index} name={fullName} lastSender={senderName} message={msg} />
+            const isUnopened = !msg.wasOpened; 
+
+            return <ThreadSummary index={key} name={fullName} lastSender={senderName} message={msg} isUnopened={isUnopened} openMessage={openMessage} />
             
             // <li>{msg.message}, from {profiles.get(msg.sender)?.firstName}; to {profiles.get(msg.recipient)?.firstName}</li>;
         })}
@@ -66,7 +62,7 @@ function Messages() {
                     return (<>
                         <Typography variant="h3">Conversations</Typography>
 
-                        <MessageThreads myProfile={myProfile} messages={store.messages} profiles={store.profiles} />
+                        <MessageThreads myProfile={myProfile} messages={store.messages} profiles={store.profiles} openMessage={msg => store.setMessagesAsOpened([msg])} />
 
 
                         {/* <ul>

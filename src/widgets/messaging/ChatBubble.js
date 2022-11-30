@@ -25,7 +25,7 @@ export default function ChatBubble({ isSender }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Card sx={{ mb: 3, width: '65%', position: 'relative', left: offset }}>
+            <Card sx={{borderRadius: 3, mb: 3, width: '65%', position: 'relative', left: offset }}>
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='p'>Laundry is the biggest way to do fun things together!</Typography>
                     <Typography fontSize='0.8rem' variant='p' textAlign='right'>21m</Typography>

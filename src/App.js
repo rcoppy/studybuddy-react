@@ -168,6 +168,17 @@ class App extends React.Component {
       }));
     };
 
+    this.store.setMessagesAsOpened  = (messagesToOpen) => {
+      messagesToOpen.forEach(msg => {
+        const openedMessage = Object.assign(msg, { wasOpened: true }); 
+        this.state.store.messages.set(msg.uuid, openedMessage); 
+      });
+
+      this.setState(state => ({
+        store: this.state.store,
+      }));
+    };
+
     this.state = {
       myProfile: new StudentProfileModel(),
       updateMyProfile: this.updateMyProfile,
@@ -191,6 +202,7 @@ class App extends React.Component {
         removeInvites: this.store.removeInvites,
 
         messages: new Map(),
+        setMessagesAsOpened: this.store.setMessagesAsOpened, 
         sendMessages: this.store.sendMessages,
         deleteMessages: this.store.deleteMessages,
 

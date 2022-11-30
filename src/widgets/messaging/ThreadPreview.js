@@ -30,8 +30,13 @@ const timeFromDate = (date) => {
 };
 
 
-export default function ThreadPreview({ name, lastSender, message }) {
-    const [pending, setPending] = React.useState(true);
+export default function ThreadPreview({ name, lastSender, message, isUnopened = false, openMessage = () => {} }) {
+    const [pending, setPending] = React.useState(isUnopened);
+
+    const handleClick = () => {
+        setPending(false); 
+        openMessage(message); // TODO: this only sets last unopened message in a chain to open, not all pending messages (shouldn't be noticeable but is lazy)
+    };
 
     return (
         <Card direction='row' sx={{
@@ -48,7 +53,7 @@ export default function ThreadPreview({ name, lastSender, message }) {
                 </IconButton>
             </Stack>
 
-            <CardActionArea className='right' component={Link} to="/messages/1" onClick={() => setPending(false)} sx={{
+            <CardActionArea className='right' component={Link} to={`/messages/${message.uuid}`} onClick={handleClick} sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -63,7 +68,7 @@ export default function ThreadPreview({ name, lastSender, message }) {
                     <Typography variant="p">{timeFromDate(new Date(message.timestamp))}</Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    <Typography variant="p" fontSize='0.7rem'>{lastSender.firstName}: {message.message}</Typography>
+                    <Typography variant="p" fontSize='0.7rem'>{lastSender}: {message.message}</Typography>
                 </Stack>
             </CardActionArea>
 

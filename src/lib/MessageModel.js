@@ -8,6 +8,7 @@ export default class MessageModel {
         this.message = message; 
         this.uuid = uuidv4();
         this.timestamp = Date.now(); 
+        this.wasOpened = false; 
     }
 }
 
