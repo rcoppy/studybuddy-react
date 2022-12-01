@@ -28,7 +28,20 @@ import BlockIcon from '@mui/icons-material/Block';
 import GroupIcon from '@mui/icons-material/Group';
 import Alert from '@mui/material/Alert';
 import AvatarImage from './static/images/avatar.jpg';
+import { GlobalContext } from './lib/GlobalContext';
 
+function getUnopenedMessagesCount(messages, userId) {
+    let count = 0; 
+    for (const m of messages.values()) {
+        if (m.recipient !== userId || m.wasOpened) {
+            continue; 
+        }
+
+        count += 1; 
+    }
+
+    return count; 
+}
 
 function AppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -45,7 +58,43 @@ function AppBar() {
             <MuiAppBar position='sticky'>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                        <Stack component={Link} to="/" direction="row" spacing={0.5} sx={{ color: 'white', textDecoration: 'none', ml: 1, display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                            <GroupIcon fontSize='large' htmlColor='white' />
+                            <Typography variant="h6" fontSize='1.15rem' fontWeight='bold'>
+                                StudyBuddies
+                            </Typography>
+                        </Stack>
+
+                        <Stack direction="row" spacing={0.25} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                            <Link to="/">
+                                <IconButton aria-label="see homepage" component="label">
+                                    <HomeIcon htmlColor="white" />
+                                </IconButton>
+                            </Link>
+
+                            <Link to="/messages">
+                                <IconButton aria-label="see messages" component="label">
+                                    <GlobalContext.Consumer>
+                                        {({ store, myProfile }) =>
+                                        <Badge badgeContent={getUnopenedMessagesCount(store.messages, myProfile.uuid)} color="warning">
+                                            <MailIcon htmlColor="white" />
+                                        </Badge>}
+                                    </GlobalContext.Consumer>
+                                </IconButton>
+                            </Link>
+
+                            <Tooltip title="Account settings">
+                                <IconButton
+                                    onClick={handleClick}
+                                    size="small"
+                                    sx={{ mr: 2 }}
+                                    aria-controls={open ? 'account-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                >
+                                    <Avatar sx={{ width: 32, height: 32 }} alt="Profile picture" src={AvatarImage} />
+                                </IconButton>
+                            </Tooltip>
 
                             <Menu
                                 anchorEl={anchorEl}
@@ -70,7 +119,7 @@ function AppBar() {
                                             display: 'block',
                                             position: 'absolute',
                                             top: 0,
-                                            left: 14,
+                                            right: 23,
                                             width: 10,
                                             height: 10,
                                             bgcolor: 'background.paper',
@@ -83,7 +132,7 @@ function AppBar() {
                                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                             >
                                 <MenuItem component={Link} to="/profile/me">
-                                    <Avatar alt="Profile picture" src={AvatarImage} />Profile
+                                    <Avatar alt="Profile badge" />Profile
                                 </MenuItem>
                                 {/* <MenuItem component={Link} to="/group/me">
                                     <ListItemIcon>
@@ -117,48 +166,6 @@ function AppBar() {
                                     Logout
                                 </MenuItem>
                             </Menu>
-                            {/* <Link to="/profile/me">
-                            <Avatar sx={{ mr: 2 }} />
-                        </Link> */}
-                            <Tooltip title="Account settings">
-                                <IconButton
-                                    onClick={handleClick}
-                                    size="small"
-                                    sx={{ mr: 2 }}
-                                    aria-controls={open ? 'account-menu' : undefined}
-                                    aria-haspopup="true"
-                                    aria-expanded={open ? 'true' : undefined}
-                                >
-                                    <Avatar sx={{ width: 32, height: 32 }}  alt="Profile picture" src={AvatarImage} />
-                                </IconButton>
-                            </Tooltip>
-                            <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>
-                                StudyBuddies
-                            </Typography>
-                        </Stack>
-
-                        <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                            <Link to="/">
-                                <IconButton aria-label="see homepage" component="label">
-                                    <HomeIcon color="primary[50]" />
-                                </IconButton>
-                            </Link>
-
-                            <Link to="/messages">
-                                <IconButton aria-label="see messages" component="label">
-                                    <Badge badgeContent={14} color="warning">
-                                        <MailIcon color="primary[50]" />
-                                    </Badge>
-                                </IconButton>
-                            </Link>
-
-                            {/* <Link to="/invites">
-                                <IconButton aria-label="see invites" component="label">
-                                    <Badge badgeContent={14} color="warning">
-                                        <NotificationsIcon color="primary[50]" />
-                                    </Badge>
-                                </IconButton>
-                            </Link> */}
                         </Stack>
                     </Toolbar>
                 </Container>
