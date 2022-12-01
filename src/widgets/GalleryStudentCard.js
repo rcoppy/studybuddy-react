@@ -7,20 +7,20 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack, IconButton, Avatar, Chip, CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider, styled, useTheme } from '@mui/material/styles';
 import blue from '@mui/material/colors/blue';
 import StudentViewModal from '../modals/StudentViewModal';
 
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    background: {
-      paper: blue[200],
-      chip: blue[100],
-    },
-  },
-});
+// const theme = createTheme({
+//   palette: {
+//     mode: 'light',
+//     background: {
+//       paper: blue[200],
+//       chip: blue[100],
+//     },
+//   },
+// });
 
 const CustomChip = styled(Chip)(({ theme }) => ({
   backgroundColor: theme.palette.background.chip,
@@ -29,7 +29,7 @@ const CustomChip = styled(Chip)(({ theme }) => ({
 function card(student, handleOpen) {
   return (
     <CardActionArea onClick={handleOpen} >
-      <CardContent mt={2} sx={{ height: '66vw', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <CardContent mt={2} sx={{ height: '66vmin', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Stack direction="column" sx={{ minWidth: '30%', mt: 3 }}>
             <Typography variant="h5">
@@ -74,10 +74,19 @@ export default function GalleryStudentCard(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const theme = useTheme(); 
+
+  let color = props.color === 'primary'
+    ? theme.palette.primary : theme.palette.secondary;
+
+  color = color[100]; // theme.palette.augmentColor({ color: color, main: 500, light: 100, dark: 700});
+
   return (
-    <ThemeProvider theme={theme}>
-      <Card elevation={3} sx={{ bgcolor: theme.palette.primary.light[50], textDecoration: 'none', display: 'flex', alignItems: 'center', overflow: 'hidden', width: '50vh', maxHeight: '45vh', borderRadius: 3, my: 2 }}>{card(props.student, handleOpen)}</Card>
-      <StudentViewModal handleClose={handleClose} open={open} student={props.student}/>
-    </ThemeProvider>
+    // <ThemeProvider theme={theme}>
+    <>
+      <Card elevation={3} sx={{ bgcolor: color, textDecoration: 'none', display: 'flex', alignItems: 'center', overflow: 'hidden', maxHeight: '45vh', borderRadius: 3, my: 2 }}>{card(props.student, handleOpen)}</Card>
+      <StudentViewModal handleClose={handleClose} open={open} student={props.student} />
+    </>
+    // </ThemeProvider>
   );
 }
