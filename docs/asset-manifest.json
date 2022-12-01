@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.2f93fdbb.css",
-    "main.js": "./static/js/main.9015be70.js",
+    "main.js": "./static/js/main.6f75fce3.js",
     "static/js/787.20a9dc66.chunk.js": "./static/js/787.20a9dc66.chunk.js",
     "static/media/leio-mclaren-L2dTmhQzx4Q-unsplash.jpg": "./static/media/leio-mclaren-L2dTmhQzx4Q-unsplash.7f75303f0a17cfd7d9f8.jpg",
     "static/media/fran-XxkTaY1UpZU-unsplash.jpg": "./static/media/fran-XxkTaY1UpZU-unsplash.897e5d28dc81b7c1edb5.jpg",
@@ -16,11 +16,11 @@
     "static/media/logo.svg": "./static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "./index.html",
     "main.2f93fdbb.css.map": "./static/css/main.2f93fdbb.css.map",
-    "main.9015be70.js.map": "./static/js/main.9015be70.js.map",
+    "main.6f75fce3.js.map": "./static/js/main.6f75fce3.js.map",
     "787.20a9dc66.chunk.js.map": "./static/js/787.20a9dc66.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2f93fdbb.css",
-    "static/js/main.9015be70.js"
+    "static/js/main.6f75fce3.js"
   ]
 }
