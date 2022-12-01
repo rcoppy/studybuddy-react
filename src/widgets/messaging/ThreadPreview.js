@@ -19,7 +19,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-export default function ThreadPreview({ name, lastSender, message, isUnopened = false, openMessage = () => {}, threadId }) {
+export default function ThreadPreview({ avatarImagePath, name, lastSender, message, isUnopened = false, openMessage = () => {}, threadId }) {
     const [pending, setPending] = React.useState(isUnopened);
 
     const handleClick = () => {
@@ -37,7 +37,7 @@ export default function ThreadPreview({ name, lastSender, message, isUnopened = 
             <Stack className='left'>
                 <IconButton aria-label='avatar'>
                     <StyledBadge color="primary" badgeContent=' ' invisible={!pending}>
-                        <Avatar sx={{ width: '3.5rem', height: '3.5rem' }}>{name}</Avatar>
+                        <Avatar src={avatarImagePath} sx={{ width: '3.5rem', height: '3.5rem' }} />
                     </StyledBadge>
                 </IconButton>
             </Stack>

@@ -45,7 +45,7 @@ function MessageThreads({ myProfile, messages, profiles, openMessage = () => {} 
 
             const isUnopened = !msg.wasOpened; 
 
-            return <ThreadSummary index={key} name={fullName} lastSender={senderName} message={msg} isUnopened={isUnopened} openMessage={openMessage} threadId={key} />
+            return <ThreadSummary avatarImagePath={displayedUser.avatarImagePath} index={key} name={fullName} lastSender={senderName} message={msg} isUnopened={isUnopened} openMessage={openMessage} threadId={key} />
         })}
     </>;
 }

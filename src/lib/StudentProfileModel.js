@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { getRandomAvatarPath } from '../utils/avatars';
 
 export default class StudentProfileModel {
     constructor({firstName="Dave", lastName="Danielson", classYear=2023, program="SEAS"} = {}) {
@@ -8,7 +9,8 @@ export default class StudentProfileModel {
         this.classYear = classYear;
         this.program = program;
         this.uuid = uuidv4();
-
+        this.avatarImagePath = getRandomAvatarPath(); 
+        
         this.contactInfo = {
             email: "dave@gmail.com",
             phone: "(203) 755-4321",

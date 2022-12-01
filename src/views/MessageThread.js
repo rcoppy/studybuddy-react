@@ -1,4 +1,4 @@
-import { Chip, createTheme, Icon, IconButton, ThemeProvider, Typography, useTheme, TextField } from '@mui/material';
+import { Chip, createTheme, Icon, IconButton, ThemeProvider, Typography, useTheme, TextField, Paper, Avatar } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useParams } from 'react-router-dom';
 import ChatBubble from '../widgets/messaging/ChatBubble';
@@ -9,7 +9,6 @@ import { GlobalContext } from '../lib/GlobalContext';
 import { getHashFromUserIds } from '../utils/hashing';
 import { useEffect, useRef, useState } from 'react';
 import MessageModel from '../lib/MessageModel';
-import { findDOMNode } from 'react-dom';
 
 function getThreadMessages(id, allMessages) {
     if (!allMessages) return [];
@@ -39,7 +38,7 @@ function MessageThread() {
     const messagesRef = useRef(null);
 
     useEffect(() => {
-        messagesRef.current.lastChild.scrollIntoView({ behavior: 'smooth' }); 
+        messagesRef.current.lastChild.scrollIntoView({ behavior: 'smooth' });
     });
 
     return (
@@ -49,46 +48,52 @@ function MessageThread() {
 
                 let recipientId = null;
                 let recipientName = "";
+                let recipientAvatarPath = ""; 
                 if (messages.length > 0) {
                     recipientId = messages[0].sender === myProfile.uuid
                         ? messages[0].recipient : messages[0].sender;
 
                     const profile = store.profiles.get(recipientId);
                     recipientName = profile.firstName + " " + profile.lastName;
+                    recipientAvatarPath = profile.avatarImagePath; 
                 }
 
                 return <>
-                    <Stack direction='row'>
-                        <IconButton component={Link} to="/messages"><ArrowBackIcon /></IconButton>
-                        <Typography variant='h4'>{recipientName}</Typography>
-                    </Stack>
-                    <Stack sx={{ height: '70vh', overflowY: 'scroll' }}>
-                        <Stack sx={{
+                    <Paper elevation={4} sx={{ backgroundColor: theme.palette.primary[50] }}>
+                        <Stack direction='row'>
+                            <IconButton sx={{ px: 2 }}component={Link} to="/messages"><ArrowBackIcon /></IconButton>
+                            <Avatar src={recipientAvatarPath} alt="conversation partner's name" sx={{ alignSelf: 'center', mr: 2, ml: 1 }}/> 
+                            <Typography variant='h4' py={1}>{recipientName}</Typography>
+                        </Stack>
+                    </Paper>
+                    <Stack sx={{ pt: 2, height: '70vh', overflowY: 'scroll', backgroundColor: theme.palette.grey[200] }}>
+                        <div ref={messagesRef} style={{
                             width: '100%', display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center'
                         }}>
                             <ThemeProvider theme={theme}>
-                                <div style={{width: "100%"}} ref={messagesRef}>
-                                    <ChatBubbles currentUser={myProfile} messages={messages} />
-                                </div>
+                                <ChatBubble message={new MessageModel({ message: "hello" })} isSender={false} />
+                                <ChatBubbles currentUser={myProfile} messages={messages} />
                             </ThemeProvider>
-
+                        </div>
+                    </Stack>
+                    <Paper>
+                        <Stack noValidate autoComplete="off" component="form" className="keyboard" direction='row' sx={{ backgroundColor: theme.palette.primary[50], pt: 1, pb: 3, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <TextField
+                                hiddenLabel
+                                id="filled-hidden-label-small"
+                                variant="filled"
+                                size="small"
+                                value={messageText}
+                                onInput={e => setMessageText(e.target.value)}
+                                sx={{ width: '35ch' }}
+                            />
+                            <IconButton onClick={() => dispatchMessage(myProfile.uuid, recipientId, store.sendMessages, messageText)}>
+                                <Send />
+                            </IconButton>
                         </Stack>
-                    </Stack>
-                    <Stack noValidate autoComplete="off" component="form" className="keyboard" direction='row' sx={{ mt: 1, mb: 3, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <TextField
-                            hiddenLabel
-                            id="filled-hidden-label-small"
-                            variant="filled"
-                            size="small"
-                            value={messageText}
-                            onInput={e => setMessageText(e.target.value)}
-                        />
-                        <IconButton onClick={() => dispatchMessage(myProfile.uuid, recipientId, store.sendMessages, messageText)}>
-                            <Send />
-                        </IconButton>
-                    </Stack>
+                    </Paper>
                 </>
             }}
         </GlobalContext.Consumer>

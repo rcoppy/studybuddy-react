@@ -34,7 +34,7 @@ function StudentsGallery() {
                             .filter(p => p.uuid !== myProfile.uuid)
                             .map((s, index) => {
                                 return (
-                                    <Box sx={{ maxWidth: 'fit-content', flexShrink: 0, margin: index % 2 === 0 ? '-10vw' : '10vw', }}>
+                                    <Box sx={{ maxWidth: 'fit-content', flexShrink: 0, mx: index % 2 === 0 ? '-10vw' : '0vw', }}>
                                         <GalleryStudentCard key={index} student={s} />
                                     </Box>
                                 );

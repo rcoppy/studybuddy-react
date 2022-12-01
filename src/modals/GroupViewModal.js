@@ -47,7 +47,7 @@ const composeRequestDispatch = (senderProfile, group, messageHandler, message) =
     const recipientId = group.adminId;
 
     // needs to be in list form
-    const messageInstance = [new MessageModel({ sender: senderId, recipient: recipientId, message: message })];
+    const messageInstance = [new MessageModel({ sender: senderId, recipient: recipientId, message: message, wasOpened: true })];
 
     return () => messageHandler(messageInstance);
 };

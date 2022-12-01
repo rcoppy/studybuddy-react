@@ -41,9 +41,9 @@ function card(student, handleOpen) {
           </Stack>
 
           <Avatar
-            alt="My profile photo"
-            // src="/static/images/avatar/1.jpg"
-            sx={{ width: '28vw', height: '28vw', ml: 1, mb: 1 }}
+            alt="student profile photo"
+            src={student.avatarImagePath}
+            sx={{ width: '28vmin', height: '28vmin', ml: 1, mb: 1 }}
           />
 
 
@@ -76,7 +76,7 @@ export default function GalleryStudentCard(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ bgcolor: 'palette.primary', textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '66vw', height: '66vw', borderRadius: "100%" }}>{card(props.student, handleOpen)}</Card>
+      <Card elevation={3} sx={{ bgcolor: theme.palette.primary.light[50], textDecoration: 'none', display: 'flex', alignItems: 'center', overflow: 'hidden', width: '50vh', maxHeight: '45vh', borderRadius: 3, my: 2 }}>{card(props.student, handleOpen)}</Card>
       <StudentViewModal handleClose={handleClose} open={open} student={props.student}/>
     </ThemeProvider>
   );
