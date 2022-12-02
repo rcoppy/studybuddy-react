@@ -35,7 +35,8 @@ function MessageThreads({ myProfile, messages, profiles, openMessage = () => {} 
     const threadsMap = getMessageThreadsMap(myProfile, messages);
 
     return <>
-        {Array.from(threadsMap.entries()).map(([key, msg]) => {
+        {threadsMap.size < 1 && <Typography variant="p" fontSize='1.2rem'><em>Your conversations and group invites will appear here.</em></Typography>}
+        {threadsMap.size > 0 && Array.from(threadsMap.entries()).map(([key, msg]) => {
             const displayedUser = msg.recipient === myProfile.uuid 
                 ? profiles.get(msg.sender) : profiles.get(msg.recipient); 
 
