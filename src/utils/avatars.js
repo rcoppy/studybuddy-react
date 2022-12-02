@@ -1,12 +1,12 @@
-import a1 from '../static/images/placeholder-avatars/art-hauntington-jzY0KRJopEI-unsplash.jpg';
-import a2 from '../static/images/placeholder-avatars/julian-wan-2EdIX-O2lkI-unsplash.jpg';
-import a3 from '../static/images/placeholder-avatars/mika-W0i1N6FdCWA-unsplash.jpg';
-import a4 from '../static/images/placeholder-avatars/fran-XxkTaY1UpZU-unsplash.jpg';
-import a5 from '../static/images/placeholder-avatars/julian-wan-WNoLnJo7tS8-unsplash.jpg';
-import a6 from '../static/images/placeholder-avatars/mulyadi-KLSPw4TTXSY-unsplash.jpg';
-import a7 from '../static/images/placeholder-avatars/giorgio-encinas-n34dhlh0spw-unsplash.jpg';
-import a8 from '../static/images/placeholder-avatars/leio-mclaren-L2dTmhQzx4Q-unsplash.jpg';
-import a9 from '../static/images/placeholder-avatars/mulyadi-kL4coQHVj_A-unsplash.jpg';
+import a1 from '../static/images/placeholder-avatars-small/art-hauntington-jzY0KRJopEI-unsplash.jpg';
+import a2 from '../static/images/placeholder-avatars-small/julian-wan-2EdIX-O2lkI-unsplash.jpg';
+import a3 from '../static/images/placeholder-avatars-small/mika-W0i1N6FdCWA-unsplash.jpg';
+import a4 from '../static/images/placeholder-avatars-small/fran-XxkTaY1UpZU-unsplash.jpg';
+import a5 from '../static/images/placeholder-avatars-small/julian-wan-WNoLnJo7tS8-unsplash.jpg';
+import a6 from '../static/images/placeholder-avatars-small/mulyadi-KLSPw4TTXSY-unsplash.jpg';
+import a7 from '../static/images/placeholder-avatars-small/giorgio-encinas-n34dhlh0spw-unsplash.jpg';
+import a8 from '../static/images/placeholder-avatars-small/leio-mclaren-L2dTmhQzx4Q-unsplash.jpg';
+import a9 from '../static/images/placeholder-avatars-small/mulyadi-kL4coQHVj_A-unsplash.jpg';
 
 export const avatarSet = [
     a1, a2, a3, a4, a5, a6, a7, a8, a9
