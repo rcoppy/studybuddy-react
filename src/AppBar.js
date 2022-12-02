@@ -31,16 +31,16 @@ import AvatarImage from './static/images/avatar.jpg';
 import { GlobalContext } from './lib/GlobalContext';
 
 function getUnopenedMessagesCount(messages, userId) {
-    let count = 0; 
+    let count = 0;
     for (const m of messages.values()) {
         if (m.recipient !== userId || m.wasOpened) {
-            continue; 
+            continue;
         }
 
-        count += 1; 
+        count += 1;
     }
 
-    return count; 
+    return count;
 }
 
 function AppBar() {
@@ -76,9 +76,9 @@ function AppBar() {
                                 <IconButton aria-label="see messages" component="label">
                                     <GlobalContext.Consumer>
                                         {({ store, myProfile }) =>
-                                        <Badge badgeContent={getUnopenedMessagesCount(store.messages, myProfile.uuid)} color="warning">
-                                            <MailIcon htmlColor="white" />
-                                        </Badge>}
+                                            <Badge badgeContent={getUnopenedMessagesCount(store.messages, myProfile.uuid)} color="warning">
+                                                <MailIcon htmlColor="white" />
+                                            </Badge>}
                                     </GlobalContext.Consumer>
                                 </IconButton>
                             </Link>
@@ -153,12 +153,15 @@ function AppBar() {
                                     </ListItemIcon>
                                     Privacy
                                 </MenuItem>
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <Logout fontSize="small" />
-                                    </ListItemIcon>
-                                    Logout
-                                </MenuItem>
+                                <GlobalContext.Consumer>
+                                    {({ setLoggedIn }) =>
+                                        <MenuItem onClick={() => setLoggedIn(false)}>
+                                            <ListItemIcon>
+                                                <Logout fontSize="small" />
+                                            </ListItemIcon>
+                                            Logout
+                                        </MenuItem>}
+                                </GlobalContext.Consumer>
                             </Menu>
                         </Stack>
                     </Toolbar>
