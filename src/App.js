@@ -69,6 +69,12 @@ class App extends React.Component {
       }));
     };
 
+    this.setLoggedIn = (flag) => {
+      this.setState(state => ({
+        isLoggedIn: flag,
+      }));
+    };
+
     this.store = {};
 
     this.store.addClasses = (classesToAdd) => {
@@ -168,10 +174,10 @@ class App extends React.Component {
       }));
     };
 
-    this.store.setMessagesAsOpened  = (messagesToOpen) => {
+    this.store.setMessagesAsOpened = (messagesToOpen) => {
       messagesToOpen.forEach(msg => {
-        const openedMessage = Object.assign(msg, { wasOpened: true }); 
-        this.state.store.messages.set(msg.uuid, openedMessage); 
+        const openedMessage = Object.assign(msg, { wasOpened: true });
+        this.state.store.messages.set(msg.uuid, openedMessage);
       });
 
       this.setState(state => ({
@@ -188,6 +194,9 @@ class App extends React.Component {
       addToMyGroups: this.addToMyGroups,
       removeFromMyGroups: this.removeFromMyGroups,
 
+      isLoggedIn: false,
+      setLoggedIn: this.setLoggedIn,
+
       store: {
         profiles: new Map(),
         addProfiles: this.store.addProfiles,
@@ -202,7 +211,7 @@ class App extends React.Component {
         removeInvites: this.store.removeInvites,
 
         messages: new Map(),
-        setMessagesAsOpened: this.store.setMessagesAsOpened, 
+        setMessagesAsOpened: this.store.setMessagesAsOpened,
         sendMessages: this.store.sendMessages,
         deleteMessages: this.store.deleteMessages,
 
@@ -278,10 +287,11 @@ class App extends React.Component {
           <GlobalContext.Provider value={this.state}>
             <ThemeProvider theme={theme}>
               <Router>
-                <AppBar />
+                {this.state.isLoggedIn && <AppBar />}
                 <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
                 <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
-                  <Routes>
+                  {!this.state.isLoggedIn && <Onboarding />}
+                  {this.state.isLoggedIn && <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/profile/me" element={<MyProfile />} />
                     <Route path="/profile/:id" element={<StudentProfile />} />
@@ -296,7 +306,7 @@ class App extends React.Component {
                     <Route path="/availability" element={<MyAvailability />} />
                     <Route path="/welcome" element={<Onboarding />} />
                     <Route path="/blocklist" element={<BlockList />} />
-                  </Routes>
+                  </Routes>}
                 </Container>
               </Router>
             </ThemeProvider>

@@ -134,12 +134,6 @@ function AppBar() {
                                 <MenuItem component={Link} to="/profile/me">
                                     <Avatar alt="Profile badge" />Profile
                                 </MenuItem>
-                                {/* <MenuItem component={Link} to="/group/me">
-                                    <ListItemIcon>
-                                        <GroupIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    My Groups
-                                </MenuItem> */}
                                 <Divider />
                                 <MenuItem component={Link} to="/blocklist">
                                     <ListItemIcon>
