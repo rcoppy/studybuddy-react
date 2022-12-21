@@ -304,7 +304,7 @@ class App extends React.Component {
                     <Route path="/messages" element={<Messages />} />
                     <Route path="/messages/:id" element={<MessageThread />} />
                     <Route path="/availability" element={<MyAvailability />} />
-                    <Route path="/welcome" element={<Onboarding />} />
+                    {/* <Route path="/welcome" element={<Onboarding />} /> */}
                     <Route path="/blocklist" element={<BlockList />} />
                   </Routes>}
                 </Container>

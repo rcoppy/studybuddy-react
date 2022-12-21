@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { GlobalContext } from "../lib/GlobalContext";
 import ThreadSummary from "../widgets/messaging/ThreadPreview";
 import { getHashFromUserIds } from "../utils/hashing";
+import InviteCard from "../widgets/InviteCard";
 
 function getMessageThreadsMap(myProfile, messages) {
 
@@ -51,6 +52,15 @@ function MessageThreads({ myProfile, messages, profiles, openMessage = () => {} 
     </>;
 }
 
+function Invites() {
+    return <>
+    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
+    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
+    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
+    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
+    </>;
+}
+
 function Messages() {
 
     return (
@@ -61,6 +71,8 @@ function Messages() {
                     return (<>
                         <Typography variant="h3">Conversations</Typography>
                         <MessageThreads myProfile={myProfile} messages={store.messages} profiles={store.profiles} openMessage={msg => store.setMessagesAsOpened([msg])} />
+                        <Typography variant="h3">Pending invites</Typography>
+                        <Invites />
                     </>);
                 }}
             </GlobalContext.Consumer>
