@@ -52,12 +52,33 @@ function MessageThreads({ myProfile, messages, profiles, openMessage = () => {} 
     </>;
 }
 
-function Invites() {
+function Invites({ myProfile, invites, profiles, groups, removeInvite, addGroup }) {
+    const myId = myProfile.uuid;
+
+    const receivedInvites = new Map(Array.from(invites).filter(
+        ([id, invite]) => invite.recipient === myId && invite.status === 'PENDING'
+    ));
+    
     return <>
-    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
-    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
-    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
-    <InviteCard avatarImagePath='' memberCount={4} senderName="Ashley" groupName="CompizBesties" />
+        {receivedInvites.size > 0 && <Typography variant="h3">Pending invites</Typography>}
+        {Array.from(receivedInvites.entries()).map(([key, invite]) => {
+            const sender = profiles.get(invite.sender);
+            const group = groups.get(invite.group); 
+
+            const senderName = sender.firstName;
+            const groupName = group.title; 
+            const avatar = sender.avatarImagePath; 
+            const members = group.students.length; 
+            
+            const accept = () => {
+                addGroup(group); 
+                removeInvite(invite); 
+            };
+
+            const reject = () => removeInvite(invite); 
+
+            return <InviteCard handleAccept={accept} handleReject={reject} index={key} groupId={group.uuid} avatarImagePath={avatar} memberCount={members} senderName={senderName} groupName={groupName} />
+}       )}
     </>;
 }
 
@@ -71,8 +92,8 @@ function Messages() {
                     return (<>
                         <Typography variant="h3">Conversations</Typography>
                         <MessageThreads myProfile={myProfile} messages={store.messages} profiles={store.profiles} openMessage={msg => store.setMessagesAsOpened([msg])} />
-                        <Typography variant="h3">Pending invites</Typography>
-                        <Invites />
+                        
+                        <Invites myProfile={myProfile} invites={store.invites} groups={store.groups} profiles={store.profiles} addGroup={group => store.addToMyGroups([group])} removeInvite={invite => store.removeInvites([invite])} />
                     </>);
                 }}
             </GlobalContext.Consumer>

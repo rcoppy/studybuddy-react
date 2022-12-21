@@ -43,6 +43,11 @@ export default function InviteCard({ avatarImagePath, memberCount, senderName, g
         setAnchorEl(null);
     };
 
+    const closeAndReject = () => {
+        handleReject(); 
+        handleDotsClose(); 
+    }
+
     return (
         <Card direction='row' sx={{
             display: 'flex',
@@ -102,13 +107,13 @@ export default function InviteCard({ avatarImagePath, memberCount, senderName, g
                         'aria-labelledby': 'basic-button',
                     }}
                 >
-                    <MenuItem onClick={handleDotsClose}>
+                    <MenuItem onClick={closeAndReject}>
                         <ListItemIcon>
                             <RemoveCircleOutlineIcon fontSize="small" />
                         </ListItemIcon>
                         <ListItemText>Dismiss</ListItemText>
                     </MenuItem>
-                    <MenuItem onClick={handleDotsClose}>
+                    <MenuItem onClick={closeAndReject}>
                         <ListItemIcon>
                             <BlockIcon fontSize="small" />
                         </ListItemIcon>

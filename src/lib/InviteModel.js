@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 export default class InviteModel {
     constructor({status=InviteStatus.PENDING, group="UI Design study buddies", sender="Dave", recipient="Alice"} = {}) {
         this.status = status;
-        this.group = group;
-        this.sender = sender; 
-        this.recipient = recipient;  
+        this.group = group; // UUID
+        this.sender = sender;  // UUID
+        this.recipient = recipient;  // UUID
         this.uuid = uuidv4();
     }
 }
